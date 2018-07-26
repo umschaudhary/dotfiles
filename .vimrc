@@ -1,63 +1,104 @@
-" Wes Doyle vimrc
-" Last Update March 20 2018
-
-set nocompatible
-
+set nocompatible              " required
 syntax on
 
-" Vundle begins here; turn off filetype temporarily
+filetype off                  " required
+
 " set the runtime path to include Vundle and initialize
-filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" plugins
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+"generic programming
+"
+Plugin 'honza/vim-snippets'
+Plugin 'Townk/vim-autoclose'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tobyS/vmustache'
+Plugin 'janko-m/vim-test'
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'neomake/neomake'
+Plugin 'jmcomets/vim-pony'
+
+Plugin 'fisadev/vim-isort'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-surround'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'BufOnly.vim'
+Plugin 'wesQ3/vim-windowswap'
+Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf'
+Plugin 'godlygeek/tabular'
+Plugin 'benmills/vimux'
+Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'gilsondev/searchtasks.vim'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'tpope/vim-dispatch' 
+
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'gmarik/Vundle.vim'
+Plugin 'vim-scripts/indentpython.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-markdown'
-Plugin 'flazz/vim-colorschemes'
 Plugin 'nvie/vim-flake8'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'leafgarland/typescript-vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'lepture/vim-jinja'
+Plugin 'prettier/vim-prettier'
+"auto completion
+Plugin 'ervandew/supertab'
+Plugin 'klen/rope-vim'
+"js
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'vim-scripts/vim-auto-save'
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'plytophogy/vim-virtualenv'
+"emmet
+Plugin 'mattn/emmet-vim'
+"color scheme
+Plugin 'flazz/vim-colorschemes'
+Plugin 'neutaaaaan/iosvkem'
+"color sque
+Plugin 'gko/vim-coloresque'
+Plugin 'tpope/vim-surround'
+"add all your plugins here (note older versions of Vundle
+" used Bundle instead of Plugin)
 
-call vundle#end()
-filetype plugin indent on
+" ...
 
-set term=screen-256color
-colorscheme PaperColor
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
-let python_highlight_all=1
-set bg=dark
+"color scheme
+colorscheme CandyPaper
+set splitbelow
+set autoread
+set splitright
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set ft=jinja
+
+let python_highlight_all = 1
+let g:user_emmet_leader_key='<C-Z>'
+set background=dark
 set autoindent
 set backspace=indent,eol,start
 set expandtab
 set ignorecase
-set incsearch
+set incsearch 
 set laststatus=2
-set linebreak
+set linebreak 
 set nobackup
 set noerrorbells
 set nolist
 set noswapfile
 set novb
-set nowrap
+set nowrap 
 set number
 set relativenumber
 set ruler
 set scrolloff=5
-set showmatch
+set showmatch 
 set shiftwidth=4
 set shortmess=I
 set showcmd
@@ -66,22 +107,10 @@ set sidescroll=1
 set sidescrolloff=7
 set smartcase
 set softtabstop=4
-set undolevels=1000
+set undolevels=10000
 set nrformats-=octal
 
-highlight ColorColumn ctermbg=black
-set colorcolumn=80
-
-"CtrlP
-let g:ctrlp_map = '<c-p>'
-
-"Airline
-let g:airline_theme='tomorrow'
-let g:airline_powerline_fonts = 1
-
-"NERDTree
 map <C-n> :NERDTreeToggle<CR>
-
 "Gvim mods
 set encoding=utf-8
 set hidden
@@ -110,16 +139,25 @@ let g:NERDCommentEmptyLines = 1
 
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
-
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 "Enable simply fold
-let g:SimpylFold_docstring_preview = 1
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
 
 " Remove all trailing whitespace by pressing F4
+
 noremap <F4> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
+let g:SimpylFold_docstring_preview = 1
+
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
 
 if has("gui_running")
     if has("gui_gtk2")
@@ -127,3 +165,43 @@ if has("gui_running")
         colorscheme iceberg
     endif
 endif
+
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+set foldmethod=indent
+set foldlevel=99
+nnoremap <space> za
+
+
+" Syntastic Configuration
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+
+
+autocmd! BufWritePost * Neomake
+let g:neomake_elixir_enabled_makers = ['mix', 'credo', 'dogma']
+
+
+let test#strategy = "vimux"
+
+" Neocomplete Settings
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+inoremap jj <Esc>
