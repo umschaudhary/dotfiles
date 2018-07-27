@@ -24,7 +24,3 @@ alias pkgmanager='react-native start --port='
 alias pakagemanager="react-native start"
 alias startan='react-native init'
 alias npmstart='npm start -- --reset-cache'
-alias charm='/home/ums/.local/share/JetBrains/Toolbox/apps/PyCharm-P/ch-0/163.15529.24/bin/pycharm.sh'
-alias fm='dde-file-manager'
-alias activate='source activate'
-alias mcq='source ~/virtualenvs/mcq/bin/activate'
