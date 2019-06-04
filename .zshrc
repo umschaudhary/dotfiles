@@ -86,6 +86,12 @@ fi
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
 #export SSH_KEY_PATH="~/.ssh/rsa_id"
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/workspace
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
+source  /usr/bin/virtualenvwrapper.sh
+
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
 
 if [ -f ~/.bash_aliases ]; then
