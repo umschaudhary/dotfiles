@@ -1,1 +1,0 @@
-/home/umesh/.vim/vimrc

@@ -9,8 +9,9 @@ local gears = require("gears")
 local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
+local dpi   = require("beautiful.xresources").apply_dpi
 
-local os = { getenv = os.getenv }
+local os = os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme                                     = {}
@@ -24,15 +25,15 @@ theme.bg_normal                                 = "#060606"
 theme.bg_focus                                  = "#060606"
 theme.fg_urgent                                 = "#CC9393"
 theme.bg_urgent                                 = "#2A1F1E"
-theme.border_width                              = 1
+theme.border_width                              = dpi(1)
 theme.border_normal                             = "#0E0E0E"
 theme.border_focus                              = "#F79372"
 theme.taglist_fg_focus                          = "#F6784F"
 theme.taglist_bg_focus                          = "#060606"
 theme.tasklist_fg_focus                         = "#F6784F"
 theme.tasklist_bg_focus                         = "#060606"
-theme.menu_height                               = 16
-theme.menu_width                                = 130
+theme.menu_height                               = dpi(16)
+theme.menu_width                                = dpi(130)
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 theme.awesome_icon                              = theme.dir .."/icons/awesome.png"
 theme.taglist_squares_sel                       = theme.dir .. "/icons/square_sel.png"
@@ -82,17 +83,18 @@ local mytextclock = wibox.widget.textclock(" %H:%M ")
 mytextclock.font = theme.font
 
 -- Calendar
-lain.widget.calendar({
+theme.cal = lain.widget.cal({
     attach_to = { mytextclock },
     notification_preset = {
         font = "Misc Tamsyn 11",
         fg   = theme.fg_normal,
         bg   = theme.bg_normal
-}})
+    }
+})
 
---[[ Mail IMAP check
--- commented because it needs to be set before use
-local mail = lain.widget.imap({
+-- Mail IMAP check
+--[[ commented because it needs to be set before use
+theme.mail = lain.widget.imap({
     timeout  = 180,
     server   = "server",
     mail     = "mail",
@@ -132,6 +134,7 @@ theme.mpd = lain.widget.mpd({
 })
 
 -- /home fs
+--[[ commented because it needs Gio/Glib >= 2.54
 theme.fs = lain.widget.fs({
     notification_preset = { fg = white, bg = theme.bg_normal, font = "Misc Tamsyn 10.5" },
     settings  = function()
@@ -146,6 +149,7 @@ theme.fs = lain.widget.fs({
         widget:set_markup(markup.font(theme.font, markup(gray, fs_header) .. fs_p))
     end
 })
+--]]
 
 -- Battery
 local bat = lain.widget.bat({
@@ -187,7 +191,7 @@ local first     = wibox.widget.textbox('<span font="Misc Tamsyn 4"> </span>')
 local arrl_pre  = separators.arrow_right("alpha", "#1A1A1A")
 local arrl_post = separators.arrow_right("#1A1A1A", "alpha")
 
-local barheight = 18
+local barheight = dpi(18)
 local barcolor  = gears.color({
     type  = "linear",
     from  = { barheight, 0 },
@@ -223,10 +227,12 @@ function theme.at_screen_connect(s)
     -- We need one layoutbox per screen.
     s.mylayoutbox = awful.widget.layoutbox(s)
     s.mylayoutbox:buttons(my_table.join(
-                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+                           awful.button({}, 1, function () awful.layout.inc( 1) end),
+                           awful.button({}, 2, function () awful.layout.set( awful.layout.layouts[1] ) end),
+                           awful.button({}, 3, function () awful.layout.inc(-1) end),
+                           awful.button({}, 4, function () awful.layout.inc( 1) end),
+                           awful.button({}, 5, function () awful.layout.inc(-1) end)))
+
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
 
@@ -234,7 +240,7 @@ function theme.at_screen_connect(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons, { bg_normal = barcolor, bg_focus = barcolor })
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 18, bg = barcolor })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(18), bg = barcolor })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -255,10 +261,10 @@ function theme.at_screen_connect(s)
             wibox.widget.systray(),
             first,
             theme.mpd.widget,
-            --mail.widget,
+            --theme.mail.widget,
             theme.weather.icon,
             theme.weather.widget,
-            theme.fs.widget,
+            --theme.fs.widget,
             bat,
             theme.volume.widget,
             mytextclock,

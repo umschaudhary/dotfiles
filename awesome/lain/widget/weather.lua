@@ -10,8 +10,11 @@ local json     = require("lain.util").dkjson
 local focused  = require("awful.screen").focused
 local naughty  = require("naughty")
 local wibox    = require("wibox")
-
-local math, os, string, tonumber = math, os, string, tonumber
+local math     = math
+local os       = os
+local string   = string
+local type     = type
+local tonumber = tonumber
 
 -- OpenWeatherMap
 -- current weather and X-days forecast
@@ -49,7 +52,7 @@ local function factory(args)
     weather.icon_path = icons_path .. "na.png"
     weather.icon = wibox.widget.imagebox(weather.icon_path)
 
-    function weather.show(t_out)
+    function weather.show(seconds)
         weather.hide()
 
         if followtag then
@@ -61,12 +64,12 @@ local function factory(args)
             weather.forecast_update()
         end
 
-        weather.notification = naughty.notify({
+        weather.notification = naughty.notify {
+            preset  = notification_preset,
             text    = weather.notification_text,
             icon    = weather.icon_path,
-            timeout = t_out,
-            preset  = notification_preset
-        })
+            timeout = type(seconds == "number") and seconds or notification_preset.timeout
+        }
     end
 
     function weather.hide()

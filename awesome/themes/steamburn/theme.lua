@@ -9,8 +9,9 @@ local gears = require("gears")
 local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
+local dpi   = require("beautiful.xresources").apply_dpi
 
-local os = { getenv = os.getenv }
+local os = os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme                                     = {}
@@ -24,7 +25,7 @@ theme.fg_urgent                                 = "#CC9393"
 theme.bg_normal                                 = "#140c0b"
 theme.bg_focus                                  = "#140c0b"
 theme.bg_urgent                                 = "#2a1f1e"
-theme.border_width                              = 1
+theme.border_width                              = dpi(1)
 theme.border_normal                             = "#302627"
 theme.border_focus                              = "#c2745b"
 theme.border_marked                             = "#CC9393"
@@ -33,8 +34,8 @@ theme.tasklist_bg_focus                         = "#140c0b"
 theme.tasklist_fg_focus                         = "#d88166"
 theme.taglist_squares_sel                       = theme.dir .. "/icons/square_sel.png"
 theme.taglist_squares_unsel                     = theme.dir .. "/icons/square_unsel.png"
-theme.menu_height                               = 16
-theme.menu_width                                = 140
+theme.menu_height                               = dpi(16)
+theme.menu_width                                = dpi(140)
 theme.awesome_icon                              = theme.dir .."/icons/awesome.png"
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 theme.layout_txt_tile                           = "[t]"
@@ -51,7 +52,7 @@ theme.layout_txt_magnifier                      = "[M]"
 theme.layout_txt_floating                       = "[|]"
 theme.tasklist_plain_task_name                  = true
 theme.tasklist_disable_icon                     = true
-theme.useless_gap                               = 0
+theme.useless_gap                               = dpi(0)
 theme.titlebar_close_button_normal              = theme.zenburn_dir.."/titlebar/close_normal.png"
 theme.titlebar_close_button_focus               = theme.zenburn_dir.."/titlebar/close_focus.png"
 theme.titlebar_minimize_button_normal           = theme.zenburn_dir.."/titlebar/minimize_normal.png"
@@ -85,7 +86,7 @@ local mytextclock = wibox.widget.textclock(" %H:%M ")
 mytextclock.font = theme.font
 
 -- Calendar
-lain.widget.calendar({
+theme.cal = lain.widget.cal({
     attach_to = { mytextclock },
     notification_preset = {
         font = "Misc Tamsyn 11",
@@ -94,9 +95,9 @@ lain.widget.calendar({
     }
 })
 
---[[ Mail IMAP check
--- commented because it needs to be set before use
-local mail = lain.widget.imap({
+-- Mail IMAP check
+--[[ commented because it needs to be set before use
+theme.mail = lain.widget.imap({
     timeout  = 180,
     server   = "server",
     mail     = "mail",
@@ -148,16 +149,18 @@ local mem = lain.widget.mem({
 })
 
 -- /home fs
+--[[ commented because it needs Gio/Glib >= 2.54
 theme.fs = lain.widget.fs({
     partition = "/home",
     notification_preset = { fg = theme.fg_normal, bg = theme.bg_normal, font = "Misc Tamsyn 10.5" },
 })
+--]]
 
 -- Battery
 local bat = lain.widget.bat({
     settings = function()
         local perc = bat_now.perc
-        if bat_now.ac_status == 1 then perc = "Plug" end
+        if bat_now.ac_status == 1 then perc = perc .. " Plug" end
         widget:set_markup(markup.font(theme.font, markup(gray, " Bat ") .. perc .. " "))
     end
 })
@@ -225,6 +228,7 @@ function theme.at_screen_connect(s)
     awful.tag.attached_connect_signal(s, "property::layout", function () update_txt_layoutbox(s) end)
     s.mytxtlayoutbox:buttons(my_table.join(
                            awful.button({}, 1, function() awful.layout.inc(1) end),
+                           awful.button({}, 2, function () awful.layout.set( awful.layout.layouts[1] ) end),
                            awful.button({}, 3, function() awful.layout.inc(-1) end),
                            awful.button({}, 4, function() awful.layout.inc(1) end),
                            awful.button({}, 5, function() awful.layout.inc(-1) end)))
@@ -236,7 +240,7 @@ function theme.at_screen_connect(s)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 18 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(18) })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -257,7 +261,7 @@ function theme.at_screen_connect(s)
             wibox.widget.systray(),
             spr,
             theme.mpd.widget,
-            --mail.widget,
+            --theme.mail.widget,
             cpu.widget,
             mem.widget,
             bat.widget,

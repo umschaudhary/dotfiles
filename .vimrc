@@ -1,3 +1,4 @@
+" execute pathogen#infect()
 set nocompatible              " required
 syntax on
 
@@ -13,6 +14,8 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 "generic programming
 "
+Plugin 'jmcantrell/vim-virtualenv'
+Plugin 'lambdalisue/vim-django-support'
 Plugin 'honza/vim-snippets'
 Plugin 'Townk/vim-autoclose'
 Plugin 'tomtom/tcomment_vim'
@@ -20,10 +23,15 @@ Plugin 'tobyS/vmustache'
 Plugin 'janko-m/vim-test'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'neomake/neomake'
+Plugin 'mxw/vim-jsx'
 Plugin 'jmcomets/vim-pony'
+Plugin 'skywind3000/asyncrun.vim'
+Plugin 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+
 
 Plugin 'fisadev/vim-isort'
 Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'majutsushi/tagbar'
 Plugin 'BufOnly.vim'
 Plugin 'wesQ3/vim-windowswap'
@@ -52,7 +60,7 @@ Plugin 'klen/rope-vim'
 "js
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'pangloss/vim-javascript'
-Plugin 'plytophogy/vim-virtualenv'
+"Plugin 'plytophogy/vim-virtualenv'
 "emmet
 Plugin 'mattn/emmet-vim'
 "color scheme
@@ -61,6 +69,9 @@ Plugin 'neutaaaaan/iosvkem'
 "color sque
 Plugin 'gko/vim-coloresque'
 Plugin 'tpope/vim-surround'
+
+"autopep8 
+Plugin 'tell-k/vim-autopep8'
 "add all your plugins here (note older versions of Vundle
 " used Bundle instead of Plugin)
 
@@ -71,15 +82,21 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 "color scheme
-colorscheme CandyPaper
+colorscheme badwolf
 set splitbelow
 set autoread
 set splitright
+" set omnifunc=syntaxcomplete#Complete
 autocmd FileType python set omnifunc=pythoncomplete#Complete
-au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set ft=jinja
+"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
+au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set ft=jinja
+autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
+" autocmd autopep8 
+
+let g:autopep8_max_line_length=72
 let python_highlight_all = 1
-let g:user_emmet_leader_key='<C-Z>'
+let g:user_emmet_leader_key='<C-y>'
 set background=dark
 set autoindent
 set backspace=indent,eol,start
@@ -113,15 +130,17 @@ set nrformats-=octal
 map <C-n> :NERDTreeToggle<CR>
 "Gvim mods
 set encoding=utf-8
+scriptencoding utf-8
 set hidden
+set wildignore=*.swp,*.bak,*.pyc,*.class
 set history=100
-set mouse=a
 
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
 set guioptions-=Lo
-
+set mouse=a
+let g:NERDTreeMouseMode=3
 "nerd-commenter settings
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -137,8 +156,14 @@ let g:NERDDefaultAlign = 'left'
 " region)
 let g:NERDCommentEmptyLines = 1
 
+
+let NERDTreeMinimalUI = 1
+
+let NERDTreeDirArrows = 1
+
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
+
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 "Enable simply fold
 
@@ -160,10 +185,7 @@ EOF
 
 
 if has("gui_running")
-    if has("gui_gtk2")
-        set guifont=Inconsolata\ for\ Powerline\ Medium\ 16
-        colorscheme iceberg
-    endif
+    set background=dark
 endif
 
 nnoremap <C-J> <C-W><C-J>
@@ -205,3 +227,35 @@ inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 inoremap jj <Esc>
+let g:user_emmet_install_global = 1
+"autocmd FileType html,css EmmetInstall
+"let g:user_emmet_settings = {
+" \  'javascript.jsx' : {
+" '   \      'extends' : 'jsx',
+ " \  },
+ "j \}
+
+"auto call pep8
+autocmd FileType python noremap <buffer> <C-r> :call Autopep8()<CR>
+
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
+" ctrl + d for toggle bash 
+noremap <C-d> :sh<cr>
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'evince'
+nnoremap <S-Up> :m-2<CR>
+nnoremap <S-Down> :m+<CR>
+inoremap <S-Up> <Esc>:m-2<CR>
+inoremap <S-Down> <Esc>:m+<CR>
