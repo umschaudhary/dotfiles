@@ -130,10 +130,10 @@ inoremap <C-l> <Right>
 
 inoremap jj <Esc>
 
-nnoremap <S-Up> :m-2<CR>
-nnoremap <S-Down> :m+<CR>
-inoremap <S-Up> <Esc>:m-2<CR>
-inoremap <S-Down> <Esc>:m+<CR>
+nnoremap <leader>w :m-2<CR>
+nnoremap <leader>s :m+<CR>
+inoremap <leader>w <Esc>:m-2<CR>
+inoremap <leader>s <Esc>:m+<CR>
 
 " fold
 nnoremap <leader><space> za
