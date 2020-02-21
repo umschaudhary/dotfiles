@@ -55,3 +55,6 @@ alias chbash='chsh -s /bin/bash'
 alias ydl='youtube-dl --extract-audio --audio-format mp3'
 #find . -name '*.pyc' | xargs -n 1 git rm --cached
 alias log="git log --shortstat --author 'Umesh Chaudhary' --since '10am'" 
+alias brightness="xrandr --output HDMI1 --brightness"
+alias tuch="xinput map-to-output 11 HDMI1"
+alias extend="xrandr --output HDMI1 --same-as eDP1"

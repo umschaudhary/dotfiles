@@ -24,6 +24,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
                       require("awful.hotkeys_popup.keys")
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 local dpi           = require("beautiful.xresources").apply_dpi
+local xrandr = require("xrandr")
 -- }}}
 
 -- {{{ Error handling
@@ -244,6 +245,7 @@ root.buttons(my_table.join(
 globalkeys = my_table.join(
     -- Take a screenshot
     -- https://github.com/lcpz/dots/blob/master/bin/screenshot
+    awful.key({altkey}, "x", function() xrandr.xrandr() end),
     awful.key({ altkey }, "p", function() os.execute("scrot") end,
               {description = "take a screenshot", group = "hotkeys"}),
     awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,

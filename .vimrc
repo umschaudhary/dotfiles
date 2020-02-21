@@ -3,7 +3,7 @@ set nocompatible              " required
 syntax on
 
 filetype off                  " required
-
+filetype plugin on
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -27,6 +27,7 @@ Plugin 'mxw/vim-jsx'
 Plugin 'jmcomets/vim-pony'
 Plugin 'skywind3000/asyncrun.vim'
 Plugin 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+" Plugin 'Yggdroot/indentLine'
 
 
 Plugin 'fisadev/vim-isort'
@@ -72,6 +73,7 @@ Plugin 'tpope/vim-surround'
 
 "autopep8 
 Plugin 'tell-k/vim-autopep8'
+Plugin 'scrooloose/nerdcommenter'
 "add all your plugins here (note older versions of Vundle
 " used Bundle instead of Plugin)
 
@@ -89,6 +91,8 @@ set splitright
 " set omnifunc=syntaxcomplete#Complete
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 "autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.html,*.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 au BufNewFile,BufRead *.html,*.htm,*.shtml,*.stm set ft=jinja
 autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
@@ -227,7 +231,10 @@ inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 inoremap jj <Esc>
-let g:user_emmet_install_global = 1
+
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
 "autocmd FileType html,css EmmetInstall
 "let g:user_emmet_settings = {
 " \  'javascript.jsx' : {
@@ -236,7 +243,7 @@ let g:user_emmet_install_global = 1
  "j \}
 
 "auto call pep8
-autocmd FileType python noremap <buffer> <C-r> :call Autopep8()<CR>
+autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
 
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
@@ -259,3 +266,7 @@ nnoremap <S-Up> :m-2<CR>
 nnoremap <S-Down> :m+<CR>
 inoremap <S-Up> <Esc>:m-2<CR>
 inoremap <S-Down> <Esc>:m+<CR>
+
+" let g:indentLine_char = '.'
+"
+"
