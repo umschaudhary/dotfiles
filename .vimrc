@@ -92,6 +92,7 @@ let g:NERDTrimTrailingWhitespace = 1
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
+let NERDTreeQuitOnOpen = 1
 " For Neovim 0.1.3 and 0.1.4 - https://github.com/neovim/neovim/pull/2198
 if (has('nvim'))
   let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
@@ -146,3 +147,7 @@ map <leader>n :NERDTreeToggle<CR>
 map <silent> <leader>jd :CtrlPTag<cr><c-\>w
 map <silent> <leader>je :CtrlPBuffer<cr><c-\>w
 let g:autopep8_disable_show_diff=1
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
