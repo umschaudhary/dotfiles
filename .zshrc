@@ -9,7 +9,7 @@
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="spaceship"
-
+#ZSH_THEME="robbyrussell"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
@@ -65,7 +65,16 @@ ZSH_THEME="spaceship"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(
+	git 
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+	pip
+	dotenv
+	zsh-autosuggestions
+	common-aliases
+	copyfile
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -83,7 +92,10 @@ else
   export EDITOR='mvim'
 fi
 
-# Compilation flags
+if [ -f ~/.bash_aliases ]; then
+        . ~/.bash_aliases      # Compilation flags
+fi                          
+
 export ARCHFLAGS="-arch x86_64"
 #export SSH_KEY_PATH="~/.ssh/rsa_id"
 export WORKON_HOME=$HOME/.virtualenvs
@@ -93,13 +105,6 @@ export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
 source  /usr/bin/virtualenvwrapper.sh
 
 [[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
-
-if [ -f ~/.bash_aliases ]; then
-        . ~/.bash_aliases
-fi
-
-
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/march/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -117,27 +122,29 @@ unset __conda_setup
 
 
 SPACESHIP_PROMPT_ORDER=(
-  user          # Username section
+ # user          # Username section
   dir           # Current directory section
-  host          # Hostname section
+#  host          # Hostname section
   git           # Git section (git_branch + git_status)
-  hg            # Mercurial section (hg_branch  + hg_status)
+  venv
+  pyenv
+  docker
   exec_time     # Execution time
   line_sep      # Line break
   vi_mode       # Vi-mode indicator
-  jobs          # Background jobs indicator
-  exit_code     # Exit code section
   char          # Prompt character
 )
 
-SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_CHAR_SYMBOL="⤷➤"
 SPACESHIP_CHAR_SUFFIX=" "
+SPACESHIP_PROMPT_ADD_NEWLINE=false
+# VENV
+SPACESHIP_VENV_SHOW=true
+SPACESHIP_VENV_PREFIX="$SPACESHIP_PROMPT_DEFAULT_PREFIX"
+SPACESHIP_VENV_SUFFIX="$SPACESHIP_PROMPT_DEFAULT_SUFFIX"
+SPACESHIP_VENV_COLOR="yellow"
 
-
-
-
-
-
-
-
+function virtualenv_info {
+ [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+}
+VIRTUAL_ENV_DISABLE_PROMPT=false
