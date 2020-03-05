@@ -25,7 +25,7 @@ Plug 'tell-k/vim-autoflake'
 Plug 'mgedmin/python-imports.vim'
 Plug 'dense-analysis/ale'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
-"Plug 'dense-analysis/ale'
+Plug 'airblade/vim-gitgutter'
 " All of your Plugins must be added before the following line
 call plug#end()            " required
 filetype plugin indent on    " required
