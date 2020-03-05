@@ -23,6 +23,8 @@ Plug 'mbbill/undotree' "Undo tree history
 Plug 'niklas-8/vim-darkspace'
 Plug 'tell-k/vim-autoflake'
 Plug 'mgedmin/python-imports.vim'
+Plug 'dense-analysis/ale'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 "Plug 'dense-analysis/ale'
 " All of your Plugins must be added before the following line
 call plug#end()            " required
@@ -114,7 +116,7 @@ let NERDTreeQuitOnOpen = 1
 
 let g:autopep8_disable_show_diff=1
 let g:autopep8_on_save = 1
-let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
+let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js','*.pyc','.git','.idea']
 let g:gutentags_cache_dir = '~/.vim/gutentags'
 " seting undo directories
 " shcortcuts
@@ -145,11 +147,10 @@ inoremap <C-l> <Right>
 
 inoremap jj <Esc>
 
-nnoremap <leader>w :m-2<CR>
 nnoremap <leader>s :m+<CR>
+nnoremap <leader>w :m-2<CR>
 inoremap <leader>w <Esc>:m-2<CR>
 inoremap <leader>s <Esc>:m+<CR>
-
 " nerd tree shortcuts
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 nnoremap <silent> <Leader>m :NERDTreeMirror<CR>
@@ -158,6 +159,7 @@ map <leader>n :NERDTreeToggle<CR>
 map <silent> <leader>jd :CtrlPTag<cr><c-\>w
 map <silent> <leader>je :CtrlPBuffer<cr><c-\>w
 
+" auto completion selection with ta
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -203,12 +205,12 @@ endfunction " }}}
 
 " Mappings {{{
 
-nnoremap <silent> \1 :call HiInterestingWord(1)<cr>
-nnoremap <silent> \2 :call HiInterestingWord(2)<cr>
-nnoremap <silent> \3 :call HiInterestingWord(3)<cr>
-nnoremap <silent> \4 :call HiInterestingWord(4)<cr>
-nnoremap <silent> \5 :call HiInterestingWord(5)<cr>
-nnoremap <silent> \6 :call HiInterestingWord(6)<cr>
+nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
+nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
+nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
+nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
+nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
+nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
 
 " }}}
 " Default Highlights {{{
@@ -227,6 +229,11 @@ nnoremap gv V`]
 "select charwise contents of current line excluding intendent
 nnoremap vv ^vg_
 " hi Normal guibg=NONE ctermbg=NONE
-
+" pylint and django ale setup
+let g:ale_python_pylint_options = '--load-plugins pylint_django'
 map <leader>in    :ImportName<CR>
 map <leader>ih  :ImportNameHere<CR>
+
+" vim clap 
+map <leader>f :Clap files <CR>
+map <leader>g :Clap grep<CR>
