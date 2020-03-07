@@ -65,16 +65,6 @@ function! ToggleMouse() abort
   endif
 endfunction
 
-" search with visual mode
-function! VSetSearch()
-  let temp = @@
-  norm! gvy
-  let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-  let @@ = temp
-endfunction
-xnoremap # :<C-u>call VSetSearch()<CR>??<CR><c-o>
-xnoremap * :<C-u>call VSetSearch()<CR>//<CR><c-o>
-
 " ---------------- General Settings ------------------
 
 filetype plugin indent on    " required
@@ -222,17 +212,14 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 let airline#extensions#tabline#show_buffers = 0
 let g:airline_theme='darkspace'
 
+let python_highlight_all=1
+syntax on
 
 " theming
 let g:darkspace_italics=1
 colorscheme darkspace
 
 
-let python_highlight_all=1
-syntax on
-
-" ale setup
-" syntax check pylint
 
 
 " Nerd Tree
@@ -348,7 +335,7 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 " }}}
 
 "select charwise contents of current line excluding intendent
-nnoremap vv ^vg_
+nnoremap sv ^vg_
 
 "linting
 let g:ale_python_pylint_options = '--load-plugins pylint_django'
