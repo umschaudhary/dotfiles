@@ -3,7 +3,7 @@
 " set the runtime path to include Vundle and initialize
 call plug#begin()
 
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+"Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'scrooloose/nerdtree' "nerdtree
 Plug 'preservim/nerdcommenter'
 Plug 'kien/ctrlp.vim' " ctrlp
@@ -24,7 +24,8 @@ Plug 'dense-analysis/ale'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'airblade/vim-gitgutter' " git status on runtime
 Plug 'jiangmiao/auto-pairs'
-" All of your Plugins must be added before the following line
+Plug 'kiteco/vim-plugin'
+"All of your Plugins must be added before the following line
 call plug#end()            " required
 
 " --- Functions --------------------------
@@ -126,12 +127,6 @@ set clipboard=unnamedplus
 "
 "  ---- Indentatin --------
 set cinoptions=g0,l1,i0
-set smarttab
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set shiftround
-set expandtab
 
 " ---- Autocommand ---------------------
 
@@ -154,9 +149,8 @@ set wildmenu
 set wildignorecase
 set wildmode=full
 set wildignore=*.o,*.obj,*~
-set wildignore+=*.swp,*.tmp
+set wildignore+=*.swp,*.tmp,*.bak
 set wildignore+=*.mp3,*.mp4,*mkv
-set wildignore+=*.pyc,*.bak,*.class
 set wildignore+=*.bmp,*.gif,*ico,*.jpg,*.png
 set wildignore+=*.pdf,*.doc,*.docx,*.ppt,*.pptx
 set wildignore+=*.rar,*.zip,*.tar,*.tar.gz,*.tar.xz
@@ -248,6 +242,7 @@ noremap <leader>as :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 " gutentags
 let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js','*.pyc','.git','.idea']
 let g:gutentags_cache_dir = '~/.vim/gutentags'
+set tags=tags
 
 
 " zoom in
@@ -273,7 +268,6 @@ nnoremap <C-H> <C-W><C-H>
 
 " navigation
 inoremap <C-h> <Left>
-inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 
@@ -334,8 +328,6 @@ hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 
 " }}}
 
-"select charwise contents of current line excluding intendent
-nnoremap sv ^vg_
 
 "linting
 let g:ale_python_pylint_options = '--load-plugins pylint_django'
@@ -373,3 +365,17 @@ function! Toggle_transparent()
     endif
 endfunction
 nnoremap <leader>ts : call Toggle_transparent()<CR>
+
+" kite setup
+set completeopt+=menuone
+"let g:kite_tab_complete=1
+set completeopt-=preview
+nmap <silent> <leader>ks :KiteShowPopularPatterns<CR>
+nmap <silent> <leader>kh :KiteHidePopularPatterns<CR>
+set belloff+=ctrlg
+set completeopt+=noinsert
+set statusline=%<%f\ %h%m%r%{kite#statusline()}%=%-14.(%l,%c%V%)\ %P
+
+"text width
+set textwidth=80
+au BufRead,BufNewFile *.py setlocal textwidth=80
