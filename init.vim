@@ -3,7 +3,7 @@
 " set the runtime path to include Vundle and initialize
 call plug#begin()
 
-"Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'scrooloose/nerdtree' "nerdtree
 Plug 'preservim/nerdcommenter'
 Plug 'kien/ctrlp.vim' " ctrlp
@@ -23,8 +23,9 @@ Plug 'mgedmin/python-imports.vim' " import in runtime
 Plug 'dense-analysis/ale'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'airblade/vim-gitgutter' " git status on runtime
-Plug 'jiangmiao/auto-pairs'
-Plug 'kiteco/vim-plugin'
+Plug 'majutsushi/tagbar'
+" Plug 'jiangmiao/auto-pairs'
+" Plug 'kiteco/vim-plugin'
 "All of your Plugins must be added before the following line
 call plug#end()            " required
 
@@ -66,9 +67,20 @@ function! ToggleMouse() abort
   endif
 endfunction
 
+function! NerdTreeToggleFind()
+    if exists("g:NERDTree") && g:NERDTree.IsOpen()
+        NERDTreeClose
+    elseif filereadable(expand('%'))
+        NERDTreeFind
+    else
+        NERDTree
+    endif
+endfunction
+
+
 " ---------------- General Settings ------------------
 
-filetype plugin indent on    " required
+" filetype plugin indent on    " required
 syntax enable
 set nocompatible              " required
 filetype off                  " required
@@ -83,7 +95,7 @@ set splitbelow
 set splitright
 set noruler
 set laststatus=2 " display powerline on one window too
-set smartindent
+" set smartindent
 set backspace=indent,eol,start
 set foldmethod=indent
 set foldlevel=99
@@ -163,13 +175,11 @@ nnoremap <silent> <leader>th :set hlsearch!<bar>set hlsearch?<cr>
 nnoremap <silent> <leader>tm :call ToggleMouse()<cr>
 nnoremap <silent> <leader>tp :set paste!<cr>
 nnoremap <silent> <leader>ts :setlocal spell!<bar>setlocal spell?<cr>
-nnoremap <silent> <leader>tt :term<cr>i<c-\><c-n>i
+nnoremap <silent> <leader>te :term<cr>i<c-\><c-n>i
 nnoremap <silent> <leader>tw :set wrap!<bar>set wrap?<cr>
 nnoremap <F5> :UndotreeToggle<cr>
 
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
-nnoremap <silent> <Leader>m :NERDTreeMirror<CR>
-map <leader>n :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>v :call NerdTreeToggleFind()<CR>
 
 " reload vimrc
 nnoremap <silent> <leader>r :so $MYVIMRC<cr>
@@ -339,6 +349,8 @@ map <leader>ih  :ImportNameHere<CR>
 " vim clap
 map <leader>ff :Clap files <CR>
 map <leader>fg :Clap grep<CR>
+map <leader>fb :Clap buffers<CR>
+
 
 " ---- Gitgutter -----------------------
 
@@ -367,15 +379,19 @@ endfunction
 nnoremap <leader>ts : call Toggle_transparent()<CR>
 
 " kite setup
-set completeopt+=menuone
+"set completeopt+=menuone
 "let g:kite_tab_complete=1
-set completeopt-=preview
-nmap <silent> <leader>ks :KiteShowPopularPatterns<CR>
-nmap <silent> <leader>kh :KiteHidePopularPatterns<CR>
-set belloff+=ctrlg
-set completeopt+=noinsert
-set statusline=%<%f\ %h%m%r%{kite#statusline()}%=%-14.(%l,%c%V%)\ %P
+" set completeopt-=preview
+" nmap <silent> <leader>ks :KiteShowPopularPatterns<CR>
+" nmap <silent> <leader>kh :KiteHidePopularPatterns<CR>
+" set belloff+=ctrlg
+" set completeopt+=noinsert
+" set statusline=%<%f\ %h%m%r%{kite#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 "text width
 set textwidth=80
 au BufRead,BufNewFile *.py setlocal textwidth=80
+" gq to reformat after selection 
+"
+" tag bar setup
+nmap <leader>tt :TagbarToggle<CR>
