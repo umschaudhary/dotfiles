@@ -5,6 +5,7 @@ AWESOME="${CONFIG}awesome/"
 
 yes | sudo pip install virtualenv
 yes | sudo pip install virtualenvwrapper
+yes | sudo pacman -S tilix
 
 if [ ! -d "$AWESOME" ] 
 then
@@ -20,11 +21,13 @@ if [ ! -d  "$HOME/.local/share/fonts" ]
 then
     mkdir -p ~/.local/share/fonts
     cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+    fc-cache -f -v
 fi
 
 if [ ! -d "${CONGIF}nvim/" ]
 then
 	yes | sudo pacman -S neovim
+	yes | sudo pip install pylint-django
 	yes | sudo pacman -S ctags
 	yes | sudo pip install autopep8
 	yes | sudo pacman -S yarn
