@@ -12,7 +12,6 @@ then
     echo "Directory $AWESOME DOES NOT exists." 
     echo "Copying $AWESOME"
     cp -r "$PWD/.config/awesome/" $CONFIG
-    exit 9999 # die with error code 9999
 fi
 
 
