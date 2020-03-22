@@ -6,10 +6,13 @@ AWESOME="${CONFIG}awesome/"
 yes | sudo pip install virtualenv
 yes | sudo pip install virtualenvwrapper
 yes | sudo pacman -S tilix
+yes | sudo pacman -S scrot
+yes | sudo pacman -S sl
 
 if [ ! -d "$AWESOME" ] 
 then
     yes | sudo pacman -S awesome
+    yes | sudo yay -S xorg-xbacklight
     echo "Directory $AWESOME DOES NOT exists." 
     echo "Copying $AWESOME"
     cp -r "$PWD/.config/awesome/" $CONFIG
@@ -75,3 +78,5 @@ fi
 
 chsh -s $(which zsh)
 source ~/.zshrc
+
+figlet "... and we're back!" | lolcat
