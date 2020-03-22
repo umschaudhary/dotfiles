@@ -3,7 +3,7 @@
 " set the runtime path to include Vundle and initialize
 call plug#begin()
 
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree' "nerdtree
 Plug 'preservim/nerdcommenter'
 Plug 'kien/ctrlp.vim' " ctrlp
