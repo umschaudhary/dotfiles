@@ -24,7 +24,7 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
                       require("awful.hotkeys_popup.keys")
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 local dpi           = require("beautiful.xresources").apply_dpi
-local xrandr = require("xrandr")
+local xrandr = require("xorg-xrandr")
 -- }}}
 
 -- {{{ Error handling
@@ -93,16 +93,15 @@ local themes = {
 local chosen_theme = themes[5]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "tilix"
-local deepinterminal = "deepin-terminal"
-local editor       = os.getenv("EDITOR") or "vim"
+local terminal     = "alacritty"
+local editor       = os.getenv("EDITOR") or "nvim"
 local gui_editor   = "gvim"
 local browser      = "firefox"
 local guieditor    = "atom"
 local scrlocker    = "slock"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { "1", "2", "3"," "}
+awful.util.tagnames = { "1", "2", "3","4", "5", "6"}
 awful.layout.layouts = {
     awful.layout.suit.tile,
     -- awful.layout.suit.tile.left,
