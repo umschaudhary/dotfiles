@@ -24,7 +24,14 @@ if [ ! -d  "$HOME/.local/share/fonts" ]
 then
     mkdir -p ~/.local/share/fonts
     cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+    wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+	wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+	mkdir ~/.fonts #if directory doesn't exist
+	mv PowerlineSymbols.otf ~/.fonts/
+	mkdir -p ~/.config/fontconfig/conf.d #if directory doesn't exists
+
     fc-cache -f -v
+    mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 fi
 
 if [ ! -d "${CONGIF}nvim/" ]
@@ -79,4 +86,5 @@ fi
 chsh -s $(which zsh)
 source ~/.zshrc
 
+echo "install manually hack font from github"
 figlet "... and we're back!" | lolcat

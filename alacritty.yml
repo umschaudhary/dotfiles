@@ -57,6 +57,8 @@ scrolling:
 
 # Font configuration (changes require restart)
 font:
+  normal:
+    family: hack
   # The normal (roman) font face to use.
   # Style can be specified to pick a specific face.
  
