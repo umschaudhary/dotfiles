@@ -51,6 +51,7 @@ fi
 
 if [ ! -d "${CONFIG}alacritty/" ]
 then
+	yes | sudo pacman -S tmux
 	yes | sudo pacman -S alacritty
 	mkdir -p ~/.config/alacritty/
 	cp alacritty.yml ${CONFIG}alacritty/alacritty.yml
