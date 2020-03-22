@@ -10,6 +10,8 @@ yes | sudo pacman -S scrot
 yes | sudo pacman -S sl
 yes | yay -S strongswan
 yes | yay -S networkmanager-l2tp
+yes | yay -S uget-integrator-chrome uget-integrator-chromium uget-integrator-opera uget-integrator-firefox
+yes | sudo pacman -S uget
 
 if [ ! -d "$AWESOME" ] 
 then
