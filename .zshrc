@@ -89,7 +89,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 if [ -f ~/.bash_aliases ]; then
@@ -149,3 +149,41 @@ function virtualenv_info {
  [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
 }
 VIRTUAL_ENV_DISABLE_PROMPT=false
+
+bindkey -v
+# no delay entering normal mode
+# https://coderwall.com/p/h63etq
+# https://github.com/pda/dotzsh/blob/master/keyboard.zsh#L10
+# 10ms for key sequences
+KEYTIMEOUT=1
+
+# show vim status
+# http://zshwiki.org/home/examples/zlewidgets
+function zle-line-init zle-keymap-select {
+    # RPS1="${${KEYMAP/vicmd/-- NORMAL --}/(main|viins)/-- INSERT --}"
+    # RPS2=$RPS1
+    zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+# add missing vim hotkeys
+# http://zshwiki.org/home/zle/vi-mode
+bindkey -a u undo
+bindkey -a '^T' redo
+bindkey '^?' backward-delete-char  #backspace
+
+# history search in vim mode
+# http://zshwiki.org./home/zle/bindkeys#why_isn_t_control-r_working_anymore
+# ctrl+r to search history
+bindkey -M viins '^r' history-incremental-search-backward
+bindkey -M vicmd '^r' history-incremental-search-backward
+
+
+
+
+
+##### for ~/tmux.conf
+# Lowers the delay time between the prefix key and other keys - fixes pausing in vim
+set -sg escape-time 1
+
