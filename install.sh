@@ -89,6 +89,15 @@ else
 cat $PWD/.zshrc > $HOME/.zshrc
 fi
 
+if [ ! -d "${HOME}/.tmux" ]
+then
+	yes | sudo pacma -S tmux
+	cp .tmux.conf ~/.tmux.conf
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+else
+	cat .tmux.conf > ~/.tmux.conf
+fi
+
 chsh -s $(which zsh)
 source ~/.zshrc
 
