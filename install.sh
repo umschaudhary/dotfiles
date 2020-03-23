@@ -94,8 +94,10 @@ then
 	yes | sudo pacma -S tmux
 	cp .tmux.conf ~/.tmux.conf
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	cp battery ~/.tmux/
 else
 	cat .tmux.conf > ~/.tmux.conf
+	cat battery > ~/.tmux/battery
 fi
 
 chsh -s $(which zsh)
