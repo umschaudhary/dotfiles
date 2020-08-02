@@ -12,6 +12,7 @@ yes | yay -S strongswan
 yes | yay -S networkmanager-l2tp
 yes | yay -S uget-integrator-chrome uget-integrator-chromium uget-integrator-opera uget-integrator-firefox
 yes | sudo pacman -S uget
+yes | sudo pacman -S lolcat figlet tmux
 
 if [ ! -d "$AWESOME" ] 
 then
@@ -55,7 +56,6 @@ fi
 
 if [ ! -d "${CONFIG}alacritty/" ]
 then
-	yes | sudo pacman -S tmux
 	yes | sudo pacman -S alacritty
 	mkdir -p ~/.config/alacritty/
 	cp alacritty.yml ${CONFIG}alacritty/alacritty.yml
