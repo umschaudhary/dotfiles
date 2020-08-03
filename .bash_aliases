@@ -43,7 +43,9 @@ alias tuch="xinput map-to-output 11 HDMI1"
 alias extend="xrandr --output HDMI1 --same-as eDP1"
 alias ayulogic_up='nmcli con up 535dc113-f29a-4d7d-b632-6c7bbe8d873d ayulogic'
 alias ayulogic_down='nmcli con down 535dc113-f29a-4d7d-b632-6c7bbe8d873d ayulogic'
-alias newwifi='nmcli con up e38c9038-e535-4282-9592-71e9edaa7d78 NEWWIFI'
+alias newwifi='nmcli con up 776e26d4-fb72-4e5a-bd0d-0ea5608d434f'
 alias volup='pactl -- set-sink-volume 0 +10%'
 alias voldown='pactl -- set-sink-volume 0 -10%'
-
+alias tmuxn="tmux new -s"
+alias attach="tmux attach -t"
+alias killtmux="pkill -f tmux"
