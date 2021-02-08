@@ -10,6 +10,8 @@ yes | sudo apt install sl
 yes | sudo apt install strongswan
 yes | sudo apt install uget
 yes | sudo apt install  lolcat figlet tmux
+yes | sudo apt install rofi
+yes | sudo apt install pavucontrol
 
 if [ ! -d "$AWESOME" ]
 then
