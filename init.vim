@@ -3,28 +3,33 @@
 " set the runtime path to include Vundle and initialize
 call plug#begin()
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'scrooloose/nerdtree' "nerdtree
-Plug 'preservim/nerdcommenter'
-Plug 'kien/ctrlp.vim' " ctrlp
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " auto suggestion
+Plug 'scrooloose/nerdtree' "nerdtree file explorer
+Plug 'preservim/nerdcommenter' " file explorer 
+Plug 'kien/ctrlp.vim' " ctrlp file explorer
 Plug 'tpope/vim-fugitive' " git integration
 Plug 'wsdjeg/FlyGrep.vim' " project wise search
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'ryanoasis/vim-devicons'
-Plug 'tell-k/vim-autopep8'
-Plug 'ludovicchabant/vim-gutentags' " tags
-Plug 'vim-airline/vim-airline'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-surround'
+Plug 'Xuyuanp/nerdtree-git-plugin' "git integration on nerd tree
+Plug 'ryanoasis/vim-devicons' " icons
+Plug 'tell-k/vim-autopep8' "python auto pep8 formatting
+Plug 'ludovicchabant/vim-gutentags' " ctags/ gutentags
+Plug 'vim-airline/vim-airline' "airline theme
+Plug 'terryma/vim-multiple-cursors' "multi cursors
+Plug 'tpope/vim-surround'  " vim brackets 
 Plug 'mbbill/undotree' "Undo tree history
-Plug 'niklas-8/vim-darkspace'
-Plug 'tell-k/vim-autoflake'
+Plug 'niklas-8/vim-darkspace' "theme
+Plug 'tell-k/vim-autoflake' "remove duplicate imports
 Plug 'mgedmin/python-imports.vim' " import in runtime
-Plug 'dense-analysis/ale'
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+" Plug 'dense-analysis/ale' " auto suggestions
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' } " vim fuzzy finder window
 Plug 'airblade/vim-gitgutter' " git status on runtime
 Plug 'majutsushi/tagbar'
-" Plug 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
+Plug 'stephpy/vim-yaml'
+Plug 'mattn/emmet-vim' " auto tag finder
+Plug 'frazrepo/vim-rainbow'
+Plug 'w0rp/ale'
+Plug 'fatih/vim-go'
 " Plug 'kiteco/vim-plugin'
 "All of your Plugins must be added before the following line
 call plug#end()            " required
@@ -395,3 +400,57 @@ au BufRead,BufNewFile *.py setlocal textwidth=80
 "
 " tag bar setup
 nmap <leader>tt :TagbarToggle<CR>
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd BufRead,BufNewFile *.htm,*.html setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufRead,BufNewFile *.css,*.scss setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufRead,BufNewFile *.js setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufRead,BufNewFile *.json setlocal tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufRead,BufNewFile *.cpp setlocal tabstop=2 shiftwidth=2 softtabstop=2
+
+let g:user_emmet_leader_key=','
+
+" colored brackets
+let g:rainbow_active = 1
+let g:rainbow_load_separately = [
+    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+    \ ]
+
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
+" ale for js
+let g:ale_fixers = {
+ \ 'javascript': ['eslint']
+ \ }
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+let g:ale_fix_on_save = 1
+
+
+" go configs
+" disable all linters as that is taken care of by coc.nvim
+let g:go_diagnostics_enabled = 0
+let g:go_metalinter_enabled = []
+
+" don't jump to errors after metalinter is invoked
+let g:go_jump_to_error = 0
+
+" run go imports on file save
+let g:go_fmt_command = "goimports"
+
+" automatically highlight variable your cursor is on
+let g:go_auto_sameids = 0
+
+
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+

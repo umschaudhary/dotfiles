@@ -70,7 +70,6 @@ plugins=(
 	zsh-autosuggestions
 	zsh-syntax-highlighting
 	pip
-	dotenv
 	zsh-autosuggestions
 	common-aliases
 	copyfile
@@ -96,7 +95,7 @@ if [ -f ~/.bash_aliases ]; then
         . ~/.bash_aliases      # Compilation flags
 fi                          
 
-export ARCHFLAGS="-arch x86_64"
+#export ARCHFLAGS="-arch x86_64"
 #export SSH_KEY_PATH="~/.ssh/rsa_id"
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/workspace
@@ -104,21 +103,6 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
 source  /usr/bin/virtualenvwrapper.sh
 
-[[ -e ~/.profile ]] && emulate sh -c 'source ~/.profile'
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/march/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/march/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/march/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/march/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 
 SPACESHIP_PROMPT_ORDER=(
@@ -186,4 +170,32 @@ bindkey -M vicmd '^r' history-incremental-search-backward
 ##### for ~/tmux.conf
 # Lowers the delay time between the prefix key and other keys - fixes pausing in vim
 set -sg escape-time 1
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/march/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/march/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/march/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/march/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+export PATH="$HOME/.poetry/bin:$PATH"
+export CHROME_EXECUTABLE=/opt/google/chrome/chrome
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export GOROOT=/usr/lib/go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
 
